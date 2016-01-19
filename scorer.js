@@ -24,7 +24,27 @@ angular.module('scorerApp', [])
         };
 
         $scope.canAddPlayer = function () {
-            return true;
+            var shooter = $scope.getCurrentPlayer();
+
+            if (shooter) {
+                var turn = shooter.turns[$scope.currentTurn - 1];
+                var shots = turn.shots.length;
+
+                if (shots === 0) {
+                    return false;
+                } else {
+                    var misses = $scope.getMisses(turn);
+                    if (misses > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            } else {
+                return true;
+            }
+
+
         };
 
         $scope.addPlayer = function () {

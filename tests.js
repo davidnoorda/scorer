@@ -136,6 +136,34 @@ describe('scorer', function () {
             expect($scope.canAddPlayer()).toBe(true);
         });
 
+        it('canAddPlayer(), when current shooter has not shot, returns false', function () {
+            var $scope = {};
+
+            $controller('ScorerController', { $scope: $scope });
+
+            $scope.playerName = "First";
+            $scope.addPlayer();
+
+            expect($scope.canAddPlayer()).toBe(false);
+        });
+
+        it('canAddPlayer(), when current shooter has not missed, returns false', function () {
+            var $scope = {};
+
+            $controller('ScorerController', { $scope: $scope });
+
+            $scope.playerName = "First";
+            $scope.addPlayer();
+            
+            $scope.addHit();
+            $scope.addHit();            
+
+            expect($scope.canAddPlayer()).toBe(false);
+        });
+
+
+
+
 
 
     });

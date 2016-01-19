@@ -10,43 +10,45 @@
 
 <body>
     <div ng-controller="ScorerController as scorer">
-        
+
         <div ng-show="newTurnPrompt">
             <button ng-click="newTurn()">New turn</button>
         </div>
 
         <div>
-        <p>Current player: {{getCurrentPlayer().name}}</p>
+            <p>Current player: {{getCurrentPlayer().name}}</p>
 
-        <form ng-submit="addHit()">
-            <input type="submit" value="Hit">
-        </form>
-        <form ng-submit="addMiss()">
-            <input type="submit" value="Miss">
-        </form>
+            <div ng-hide="canAddPlayer()">
+                <form ng-submit="addHit()">
+                    <input type="submit" value="Hit">
+                </form>
+                <form ng-submit="addMiss()">
+                    <input type="submit" value="Miss">
+                </form>
+            </div>
 
-        <form ng-submit="addPlayer()" ng-show="canAddPlayer()">
-            <input type="text" ng-model="playerName" placeholder="add new player">
-            <input class="btn-primary" type="submit" value="add">
-        </form>
+            <form ng-submit="addPlayer()" ng-show="canAddPlayer()">
+                <input type="text" ng-model="playerName" placeholder="add new player">
+                <input class="btn-primary" type="submit" value="add">
+            </form>
 
-        <ul>
-            <li ng-repeat="player in players">
-                {{player.name}}
-                <ul>
-                    <li ng-repeat="turn in player.turns">
-                        Turn: {{$index + 1}} | Hits: {{getHits(turn)}} | Misses: {{getMisses(turn)}}
-                    </li>
-                </ul>
-                <span ng-repeat="shot in player.shots">{{shot.made}}</span>
-            </li>
-        </ul>
-        
-        <div>
-            {{getJSON()}}
+            <ul>
+                <li ng-repeat="player in players">
+                    {{player.name}}
+                    <ul>
+                        <li ng-repeat="turn in player.turns">
+                            Turn: {{$index + 1}} | Hits: {{getHits(turn)}} | Misses: {{getMisses(turn)}}
+                        </li>
+                    </ul>
+                    <span ng-repeat="shot in player.shots">{{shot.made}}</span>
+                </li>
+            </ul>
+
+            <div>
+                {{getJSON()}}
+            </div>
+
         </div>
-
-    </div>
 </body>
 
 </html>
