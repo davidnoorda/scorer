@@ -2,6 +2,8 @@
 angular.module('scorerApp', [])
     .controller('ScorerController', function ($scope) {
 
+        $scope.newTurnPrompt = false;
+
         $scope.currentTurn = 1;
         $scope.currentPlayer;
 
@@ -11,7 +13,19 @@ angular.module('scorerApp', [])
         //     turns: [{
         //         shots: []
         //     }]
-        // }];
+        // }]
+        
+        $scope.newTurn = function () {
+            for (var i = 0; i < $scope.players.length; i++) {
+                $scope.players[i].turns.push({ shots: [] });
+            }
+            $scope.newTurnPrompt = false;
+            $scope.currentTurn++;
+        };
+
+        $scope.canAddPlayer = function () {
+            return true;
+        };
 
         $scope.addPlayer = function () {
             var player = { name: $scope.playerName, turns: [] };
@@ -31,20 +45,20 @@ angular.module('scorerApp', [])
             var player = $scope.getCurrentPlayer();
             player.turns[$scope.currentTurn - 1].shots.push({ made: false });
         };
-        
+
         $scope.getHits = function (turn) {
-            var hits = turn.shots.filter(function(el){
-               return el.made === true; 
+            var hits = turn.shots.filter(function (el) {
+                return el.made === true;
             });
-            
+
             return hits.length;
         };
-        
+
         $scope.getMisses = function (turn) {
-            var hits = turn.shots.filter(function(el){
-               return el.made === false; 
+            var hits = turn.shots.filter(function (el) {
+                return el.made === false;
             });
-            
+
             return hits.length;
         };
 
@@ -57,14 +71,15 @@ angular.module('scorerApp', [])
                 if (shot === undefined || shot.made === true) {
                     return lastPlayer;
                 } else {
+                    $scope.newTurnPrompt = true;
                     return $scope.players[0];
                 }
             } else {
                 return null;
             }
         };
-        
-        $scope.getJSON = function() {
+
+        $scope.getJSON = function () {
             return angular.toJson($scope.players);
         };
 

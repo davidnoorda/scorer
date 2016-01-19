@@ -10,7 +10,12 @@
 
 <body>
     <div ng-controller="ScorerController as scorer">
+        
+        <div ng-show="newTurnPrompt">
+            <button ng-click="newTurn()">New turn</button>
+        </div>
 
+        <div>
         <p>Current player: {{getCurrentPlayer().name}}</p>
 
         <form ng-submit="addHit()">
@@ -20,7 +25,7 @@
             <input type="submit" value="Miss">
         </form>
 
-        <form ng-submit="addPlayer()">
+        <form ng-submit="addPlayer()" ng-show="canAddPlayer()">
             <input type="text" ng-model="playerName" placeholder="add new player">
             <input class="btn-primary" type="submit" value="add">
         </form>

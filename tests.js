@@ -109,8 +109,8 @@ describe('scorer', function () {
 
             $scope.playerName = "Fourth";
             $scope.addPlayer();
-            
-            $scope.addMiss();            
+
+            $scope.addMiss();
 
             expect($scope.getCurrentPlayer().name).toBe("First");
         });
@@ -119,13 +119,21 @@ describe('scorer', function () {
             var $scope = {};
 
             $controller('ScorerController', { $scope: $scope });
-            
+
             $scope.currentTurn = 4;
 
             $scope.playerName = "New Guy";
             $scope.addPlayer();
 
             expect($scope.players[0].turns.length).toBe(4);
+        });
+
+        it('canAddPlayer(), when there are no players, returns true', function () {
+            var $scope = {};
+
+            $controller('ScorerController', { $scope: $scope });
+
+            expect($scope.canAddPlayer()).toBe(true);
         });
 
 
