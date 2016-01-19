@@ -54,6 +54,7 @@ angular.module('scorerApp', [])
             }
             $scope.players.push(player);
             $scope.playerName = "";
+            $scope.newTurnPrompt = false;
         };
 
         $scope.addHit = function () {
