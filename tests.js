@@ -86,11 +86,9 @@ describe('scorer', function () {
             expect($scope.getCurrentPlayer().name).toBe("Fourth");
         });
 
-        it('getCurrentPlayer(), when last player has missed, should return first player', function () {
+        it('getCurrentPlayer(), when turn has incremented, should return first player', function () {
             var $scope = {};
-
             $controller('ScorerController', { $scope: $scope });
-
             $scope.playerName = "First";
             $scope.addPlayer();
 
@@ -109,8 +107,10 @@ describe('scorer', function () {
 
             $scope.playerName = "Fourth";
             $scope.addPlayer();
+            
+            $scope.addMiss();            
 
-            $scope.addMiss();
+            $scope.newTurn();
 
             expect($scope.getCurrentPlayer().name).toBe("First");
         });

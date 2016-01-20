@@ -83,7 +83,7 @@ angular.module('scorerApp', [])
             return hits.length;
         };
 
-        $scope.getCurrentPlayer = function () {
+        /*$scope.getCurrentPlayer = function () {
             var lastPlayer = $scope.players[$scope.players.length - 1];
             if (lastPlayer) {
                 var turn = lastPlayer.turns[$scope.currentTurn - 1];
@@ -98,6 +98,33 @@ angular.module('scorerApp', [])
             } else {
                 return null;
             }
+        };*/
+
+        $scope.getCurrentPlayer = function () {
+            var players = $scope.players;
+
+            if(players.length > 0) {
+                var currentPlayer;
+                for (var i = 0; i < players.length; i++) {
+                    var player = players[i];
+                    var turn = player.turns[$scope.currentTurn - 1];
+                    var shot = turn.shots[turn.shots.length - 1];
+
+                    if (shot === undefined || shot.made === true) {
+                        currentPlayer = player;
+                        break;
+                    }
+                }
+                if (currentPlayer) {
+                    return currentPlayer;
+                } else {
+                    $scope.newTurnPrompt = true;
+                    return null;
+                }
+            } else {
+                return null;
+            }
+
         };
 
         $scope.getJSON = function () {
