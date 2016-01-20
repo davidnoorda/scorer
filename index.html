@@ -7,6 +7,11 @@
     <script src="scorer.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
     crossorigin="anonymous">
+    <style>
+        .btn-group-lg>.btn {
+            padding: 32px 16px;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,28 +21,49 @@
         <div class="row">
             <div class="col-md-12">
                 <form>
-                    <div class="form-group">
-                        <label for="shooter">Current player</label>
-                        <input type="text" class="form-control" id="shooter" value="{{getCurrentPlayer().name}}" readonly>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label for="turn">Turn</label>
+                                <input type="text" class="form-control" id="turn" value="{{currentTurn}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-xs-9">
+                            <div class="form-group">
+                                <label for="shooter">Player</label>
+                                <input type="text" class="form-control" id="shooter" value="{{getCurrentPlayer().name}}" readonly>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="btn-group btn-group-justified" ng-hide="canAddPlayer()">
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-success" ng-click="addHit()" type="submit">Hit</button>
-                        </div>
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-danger" ng-click="addMiss()" type="submit">Miss</button>
+                    <div class="form-group" ng-hide="canAddPlayer()">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group btn-group-lg" role="group">
+                                <button class="btn btn-default" ng-click="undo()" type="submit">Undo</button>
+                            </div>
+                            <div class="btn-group btn-group-lg" role="group">
+                                <button class="btn btn-danger" ng-click="addMiss()" type="submit">Miss</button>
+                            </div>
+                            <div class="btn-group btn-group-lg" role="group">
+                                <button class="btn btn-success" ng-click="addHit()" type="submit">Hit - {{getTurnHits()}}</button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group" ng-show="newTurnPrompt">
-                        <button class="btn btn-primary btn-block" ng-click="newTurn()">New turn</button>
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-default" ng-click="undo()" type="submit">Undo</button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-primary" ng-click="newTurn()" type="submit">New turn</button>
+                            </div>
+                        </div>
                     </div>
-
                     <div class="input-group" ng-show="canAddPlayer()">
-                        <input type="text" class="form-control" ng-model="playerName" placeholder="add new player">
+                        <input type="text" class="form-control input-lg" ng-model="playerName" placeholder="Add player">
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" ng-click="addPlayer()">add</button>
+                            <button class="btn btn-primary btn-lg" ng-click="addPlayer()">Add</button>
                         </span>
                     </div>
                 </form>
